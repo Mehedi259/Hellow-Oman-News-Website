@@ -1,9 +1,30 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { MapPin, Mail, Phone } from "lucide-react";
+import { MapPin, Mail, Phone, Send } from "lucide-react";
 import { FaFacebook, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 import { CATEGORIES } from "@/data/news";
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    setMessage("ধন্যবাদ! আপনার সাবস্ক্রিপশন সফল হয়েছে।");
+    setEmail("");
+    setIsSubmitting(false);
+    
+    setTimeout(() => setMessage(""), 3000);
+  };
+
   return (
     <footer className="bg-slate-950 text-slate-300 pt-16 pb-8 border-t-[4px] border-brand mt-12">
       <div className="container mx-auto px-4">
@@ -34,6 +55,38 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Newsletter Column */}
+          <div>
+            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+              <span className="w-2 h-6 bg-brand rounded-sm"></span> নিউজলেটার
+            </h3>
+            <p className="text-sm text-slate-400 mb-4">
+              সর্বশেষ খবর ও আপডেট পেতে আমাদের নিউজলেটার সাবস্ক্রাইব করুন
+            </p>
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <div className="relative">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="আপনার ইমেইল"
+                  required
+                  className="w-full px-4 py-3 pr-12 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 placeholder-slate-500 focus:outline-none focus:border-brand transition-colors text-sm"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-brand hover:bg-brand-dark text-white rounded-md transition-colors disabled:opacity-50"
+                >
+                  <Send size={16} />
+                </button>
+              </div>
+              {message && (
+                <p className="text-xs text-green-400">{message}</p>
+              )}
+            </form>
+          </div>
+
           {/* Categories */}
           <div>
             <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
@@ -42,7 +95,10 @@ export default function Footer() {
             <ul className="grid grid-cols-2 gap-y-3 gap-x-4">
               {CATEGORIES.map((category) => (
                 <li key={`footer-${category}`}>
-                  <Link href="#" className="text-sm hover:text-brand transition-colors flex items-center gap-2">
+                  <Link 
+                    href={category === "প্রচ্ছদ" ? "/" : `/category/${category}`}
+                    className="text-sm hover:text-brand transition-colors flex items-center gap-2"
+                  >
                     <span className="w-1 h-1 bg-slate-700 rounded-full"></span>
                     {category}
                   </Link>
@@ -57,11 +113,11 @@ export default function Footer() {
               <span className="w-2 h-6 bg-brand rounded-sm"></span> প্রয়োজনীয় লিংক
             </h3>
             <ul className="space-y-3">
-              <li><Link href="#" className="text-sm hover:text-brand transition-colors">আমাদের সম্পর্কে</Link></li>
-              <li><Link href="#" className="text-sm hover:text-brand transition-colors">যোগাযোগ করুন</Link></li>
+              <li><Link href="/about" className="text-sm hover:text-brand transition-colors">আমাদের সম্পর্কে</Link></li>
+              <li><Link href="/contact" className="text-sm hover:text-brand transition-colors">যোগাযোগ করুন</Link></li>
               <li><Link href="#" className="text-sm hover:text-brand transition-colors">বিজ্ঞাপন দিন</Link></li>
-              <li><Link href="#" className="text-sm hover:text-brand transition-colors">গোপনীয়তা নীতি</Link></li>
-              <li><Link href="#" className="text-sm hover:text-brand transition-colors">ব্যবহারের শর্তাবলী</Link></li>
+              <li><Link href="/privacy" className="text-sm hover:text-brand transition-colors">গোপনীয়তা নীতি</Link></li>
+              <li><Link href="/terms" className="text-sm hover:text-brand transition-colors">ব্যবহারের শর্তাবলী</Link></li>
             </ul>
           </div>
 

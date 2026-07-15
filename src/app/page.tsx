@@ -3,12 +3,14 @@ import NewsTicker from "@/components/NewsTicker";
 import HeroSection from "@/components/HeroSection";
 import CategorySection from "@/components/CategorySection";
 import Footer from "@/components/Footer";
+import BreakingNews from "@/components/BreakingNews";
 import { LATEST_NEWS, TRENDING_NEWS } from "@/data/news";
 
 export default function Home() {
   return (
     <>
       <Header />
+      <BreakingNews />
       <NewsTicker />
       <main className="flex-1">
         <HeroSection />
@@ -23,13 +25,13 @@ export default function Home() {
         <CategorySection 
           title="সর্বশেষ সংবাদ" 
           articles={LATEST_NEWS} 
-          categoryLink="#"
+          categoryLink="/category/%E0%A6%B8%E0%A6%B0%E0%A7%8D%E0%A6%AC%E0%A6%B6%E0%A7%87%E0%A6%B7"
         />
         
         <CategorySection 
           title="প্রবাস" 
           articles={TRENDING_NEWS} 
-          categoryLink="#"
+          categoryLink="/category/%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AC%E0%A6%BE%E0%A6%B8"
         />
       </main>
       <Footer />
