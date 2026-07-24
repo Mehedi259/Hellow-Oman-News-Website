@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, Search, MapPin, Calendar, Mail, Send, X, Sun, Moon } from "lucide-react";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { CATEGORIES } from "@/data/news";
@@ -67,8 +68,7 @@ export default function Header() {
 
           {/* Logo */}
           <Link href="/" className="flex flex-col items-center mx-auto md:mx-0 shrink-0">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-brand m-0 leading-tight whitespace-nowrap">হ্যালো ওমান</h1>
-            <span className="text-[10px] sm:text-xs font-semibold tracking-widest text-brand-dark uppercase mt-0.5">বাংলা</span>
+            <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={200} height={50} className="h-10 sm:h-12 w-auto" />
           </Link>
 
           {/* Desktop Right Actions */}
@@ -133,8 +133,7 @@ export default function Header() {
           {/* Header */}
           <div className="p-5 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-brand/5 to-brand/10">
             <Link href="/" className="flex flex-col items-start" onClick={() => setIsMobileMenuOpen(false)}>
-              <h2 className="text-2xl font-bold text-brand m-0 leading-tight">হ্যালো ওমান</h2>
-              <span className="text-xs text-brand-dark">বাংলা</span>
+              <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={150} height={40} className="h-8 w-auto" />
             </Link>
             <button 
               onClick={() => setIsMobileMenuOpen(false)} 

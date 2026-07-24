@@ -1,3 +1,5 @@
+import postsData from './backup/posts.json';
+
 export interface NewsArticle {
   id: string;
   title: string;
@@ -7,18 +9,6 @@ export interface NewsArticle {
   excerpt?: string;
   content?: string;
 }
-
-const DUMMY_CONTENT = `
-দীর্ঘদিন ধরে প্রবাসে বসবাসকারী বাংলাদেশিরা বিভিন্ন সমস্যা ও সম্ভাবনার কথা তুলে ধরেছেন। 
-এই আলোচনা সভায় উপস্থিত ছিলেন কমিউনিটির বিশিষ্ট ব্যক্তিবর্গ এবং স্থানীয় নেতৃবৃন্দ। 
-
-তারা বলেন, "প্রবাসীদের রেমিট্যান্স দেশের অর্থনীতির অন্যতম চালিকাশক্তি। 
-তাই তাদের সুবিধা-অসুবিধাগুলো গুরুত্বের সাথে বিবেচনা করা উচিত।" 
-
-অনুষ্ঠানে আরও জানানো হয় যে আগামীতে প্রবাসীদের কল্যাণে বেশ কিছু নতুন উদ্যোগ গ্রহণ করা হবে। 
-এসব উদ্যোগের মধ্যে রয়েছে আইনি সহায়তা, কর্মসংস্থান বিষয়ক পরামর্শ এবং জরুরি স্বাস্থ্য সেবা। 
-সভায় প্রবাসীদের মধ্যে ব্যাপক উৎসাহ-উদ্দীপনা লক্ষ্য করা গেছে।
-`;
 
 export const CATEGORIES = [
   "প্রচ্ছদ",
@@ -35,154 +25,67 @@ export const CATEGORIES = [
   "লাইফস্টাইল",
 ];
 
-export const TOP_NEWS: NewsArticle = {
+// Helper to assign a relevant category based on keywords, defaulting to a rotating list
+function getCategoryForPost(title: string, index: number) {
+  if (title.includes('ওমান') || title.includes('প্রবাস') || title.includes('মাস্কাট') || title.includes('সালালাহ') || title.includes('বারকা') || title.includes('সুইক')) return 'প্রবাস';
+  if (title.includes('বাংলাদেশ') || title.includes('ঢাকা') || title.includes('সিলেট') || title.includes('চট্টগ্রাম') || title.includes('উত্তরা')) return 'বাংলাদেশ';
+  if (title.includes('সৌদি') || title.includes('দুবাই') || title.includes('আমিরাত') || title.includes('কাতার') || title.includes('শারজাহ')) return 'মধ্যপ্রাচ্য';
+  if (title.includes('ফুটবল') || title.includes('ক্রিকেট') || title.includes('বিশ্বকাপ')) return 'খেলাধুলা';
+  
+  const cats = ["সর্বশেষ", "আন্তর্জাতিক", "রাজনীতি", "অর্থনীতি"];
+  return cats[index % cats.length];
+}
+
+function formatDate(dateStr: string) {
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    const months = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+    const bnNums = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    
+    let day = d.getDate().toString();
+    let year = d.getFullYear().toString();
+    
+    // convert numbers to bangla
+    day = day.split('').map(n => bnNums[parseInt(n)] || n).join('');
+    year = year.split('').map(n => bnNums[parseInt(n)] || n).join('');
+    
+    return `${day} ${months[d.getMonth()]} ${year}`;
+  } catch (e) {
+    return dateStr;
+  }
+}
+
+const allPosts: NewsArticle[] = postsData.map((post, index) => {
+  // Fix the HTML entities in excerpt and content if any
+  let cleanDescription = (post.description || "").replace(/&#160;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+  
+  // If description is empty or too short, fallback
+  if (!cleanDescription || cleanDescription.trim().length < 10) {
+    cleanDescription = (post.content || "").replace(/<[^>]*>?/gm, '').substring(0, 150) + "...";
+  }
+
+  return {
+    id: post.id.toString(),
+    title: post.title.replace(/&amp;lsquo;|&amp;rsquo;|&ldquo;|&rdquo;/g, "'"),
+    category: getCategoryForPost(post.title, index),
+    image: post.localImage || "/images/hero_news_oman_1783894879641.png",
+    date: formatDate(post.pubDate) || "১৩ জুলাই ২০২৬",
+    excerpt: cleanDescription.substring(0, 200),
+    content: post.content || post.description || "",
+  };
+});
+
+export const TOP_NEWS: NewsArticle = allPosts[0] || {
   id: "1",
   title: "ওমানে সিলেট টু ওমান প্রবাসী ফোরামের আলোচনা সভা অনুষ্ঠিত",
   category: "প্রবাস",
   image: "/images/hero_news_oman_1783894879641.png",
   date: "১৩ জুলাই ২০২৬",
-  excerpt: "ওমানের রাজধানী মাস্কাটে সিলেট টু ওমান প্রবাসী ফোরামের এক বিশেষ আলোচনা সভা অনুষ্ঠিত হয়েছে। এই সভায় প্রবাসীদের বিভিন্ন সমস্যা ও সম্ভাবনা নিয়ে বিস্তারিত আলোচনা করা হয়।",
-  content: "ওমানের রাজধানী মাস্কাটে সিলেট টু ওমান প্রবাসী ফোরামের এক বিশেষ আলোচনা সভা অনুষ্ঠিত হয়েছে। " + DUMMY_CONTENT,
+  excerpt: "ওমানের রাজধানী মাস্কাটে সিলেট টু ওমান প্রবাসী ফোরামের এক বিশেষ আলোচনা সভা অনুষ্ঠিত হয়েছে।",
+  content: "ওমানের রাজধানী মাস্কাটে সিলেট টু ওমান প্রবাসী ফোরামের এক বিশেষ আলোচনা সভা অনুষ্ঠিত হয়েছে।",
 };
 
-export const TRENDING_NEWS: NewsArticle[] = [
-  {
-    id: "2",
-    title: "ইতিহাস গড়ে মহিলা ফুটবল দল ২০২৬ সালের এএফসি এশিয়ান কাপের কোয়ালিফাই করেছে",
-    category: "খেলাধুলা",
-    image: "/images/sports_news_1783894897556.png",
-    date: "১৩ জুলাই ২০২৬",
-    excerpt: "বাংলাদেশ মহিলা ফুটবল দল ইতিহাস সৃষ্টি করে প্রথমবারের মতো এএফসি এশিয়ান কাপে খেলার যোগ্যতা অর্জন করেছে।",
-    content: "ইতিহাস গড়ে মহিলা ফুটবল দল ২০২৬ সালের এএফসি এশিয়ান কাপের কোয়ালিফাই করেছে। " + DUMMY_CONTENT,
-  },
-  {
-    id: "3",
-    title: "উত্তরায় বিমান বিধ্বস্তে নিহত পাইলট ল্যাফটেন্যান্ট তৌকির",
-    category: "বাংলাদেশ",
-    image: "/images/hero_news_oman_1783894879641.png",
-    date: "১২ জুলাই ২০২৬",
-    excerpt: "ঢাকার উত্তরায় প্রশিক্ষণ বিমান বিধ্বস্ত হওয়ায় পাইলট ল্যাফটেন্যান্ট তৌকির নিহত হয়েছেন। দুর্ঘটনার কারণ তদন্ত করা হচ্ছে।",
-    content: "উত্তরায় বিমান বিধ্বস্তে নিহত পাইলট ল্যাফটেন্যান্ট তৌকির। " + DUMMY_CONTENT,
-  },
-  {
-    id: "4",
-    title: "সৌদি রিয়াদে অপহরণ কারী সবুজ গ্রেফতার",
-    category: "মধ্যপ্রাচ্য",
-    image: "/images/community_news_1783894917459.png",
-    date: "১১ জুলাই ২০২৬",
-    excerpt: "সৌদি আরবের রাজধানী রিয়াদে একজন বাংলাদেশী নাগরিককে অপহরণের ঘটনায় অভিযুক্ত সবুজকে গ্রেফতার করা হয়েছে।",
-    content: "সৌদি রিয়াদে অপহরণ কারী সবুজ গ্রেফতার হয়েছে। " + DUMMY_CONTENT,
-  },
-  {
-    id: "5",
-    title: "সিলেট কমিউনিটি অফ ওমানের ঈদ পূর্ণমিলনী অনুষ্ঠিত",
-    category: "প্রবাস",
-    image: "/images/community_news_1783894917459.png",
-    date: "১০ জুলাই ২০২৬",
-    excerpt: "ওমানে অবস্থানরত সিলেটের প্রবাসীদের সংগঠন সিলেট কমিউনিটি অফ ওমানের ঈদ পূর্ণমিলনী অনুষ্ঠান সফলভাবে সম্পন্ন হয়েছে।",
-    content: "সিলেট কমিউনিটি অফ ওমানের ঈদ পূর্ণমিলনী অনুষ্ঠিত হয়েছে। " + DUMMY_CONTENT,
-  },
-  {
-    id: "6",
-    title: "প্রবাসী মানবাধিকার কর্মী এম রহমান মাসুমের উপস্থিতিতে পুলিশের ব্যতিক্রমী উদ্যোগ",
-    category: "প্রবাস",
-    image: "/images/hero_news_oman_1783894879641.png",
-    date: "৯ জুলাই ২০২৬",
-    excerpt: "প্রবাসী মানবাধিকার কর্মী এম রহমান মাসুমের উপস্থিতিতে ওমান পুলিশ প্রবাসীদের নিরাপত্তা বিষয়ে একটি ব্যতিক্রমী উদ্যোগ নিয়েছে।",
-    content: "প্রবাসী মানবাধিকার কর্মী এম রহমান মাসুমের উপস্থিতিতে পুলিশের ব্যতিক্রমী উদ্যোগ। " + DUMMY_CONTENT,
-  },
-  {
-    id: "8",
-    title: "দুবাইয়ে বাংলাদেশী শ্রমিকদের ন্যূনতম মজুরি বৃদ্ধির দাবি",
-    category: "প্রবাস",
-    image: "/images/community_news_1783894917459.png",
-    date: "৮ জুলাই ২০২৬",
-    excerpt: "সংযুক্ত আরব আমিরাতের দুবাইয়ে কর্মরত বাংলাদেশী শ্রমিকরা ন্যূনতম মজুরি বৃদ্ধির দাবি জানিয়েছেন।",
-    content: "দুবাইয়ে বাংলাদেশী শ্রমিকদের ন্যূনতম মজুরি বৃদ্ধির দাবি উত্থাপিত হয়েছে। " + DUMMY_CONTENT,
-  },
-  {
-    id: "9",
-    title: "বাংলাদেশে নতুন অর্থনৈতিক অঞ্চল স্থাপনের ঘোষণা",
-    category: "অর্থনীতি",
-    image: "/images/hero_news_oman_1783894879641.png",
-    date: "৭ জুলাই ২০২৬",
-    excerpt: "সরকার দেশে তিনটি নতুন অর্থনৈতিক অঞ্চল স্থাপনের ঘোষণা দিয়েছে যা লক্ষাধিক কর্মসংস্থান সৃষ্টি করবে।",
-    content: "বাংলাদেশে নতুন অর্থনৈতিক অঞ্চল স্থাপনের ঘোষণা দেওয়া হয়েছে। " + DUMMY_CONTENT,
-  },
-  {
-    id: "10",
-    title: "ঢাকা বিশ্ববিদ্যালয়ে নতুন গবেষণা কেন্দ্র উদ্বোধন",
-    category: "শিক্ষা",
-    image: "/images/sports_news_1783894897556.png",
-    date: "৬ জুলাই ২০২৬",
-    excerpt: "ঢাকা বিশ্ববিদ্যালয়ে অত্যাধুনিক প্রযুক্তি সম্পন্ন একটি গবেষণা কেন্দ্র উদ্বোধন করা হয়েছে।",
-    content: "ঢাকা বিশ্ববিদ্যালয়ে নতুন গবেষণা কেন্দ্র উদ্বোধন করা হয়েছে। " + DUMMY_CONTENT,
-  },
-  {
-    id: "13",
-    title: "আসন্ন জাতীয় নির্বাচন নিয়ে রাজনৈতিক দলগুলোর নতুন কর্মসূচি",
-    category: "রাজনীতি",
-    image: "/images/hero_news_oman_1783894879641.png",
-    date: "৫ জুলাই ২০২৬",
-    excerpt: "আসন্ন নির্বাচনকে সামনে রেখে রাজনৈতিক দলগুলো তাদের নতুন কর্মসূচি ঘোষণা করেছে।",
-    content: "আসন্ন জাতীয় নির্বাচন নিয়ে রাজনৈতিক দলগুলোর নতুন কর্মসূচি। " + DUMMY_CONTENT,
-  },
-  {
-    id: "14",
-    title: "নতুন প্রজন্মের কাছে জনপ্রিয় হয়ে উঠছে দেশীয় চলচ্চিত্র",
-    category: "বিনোদন",
-    image: "/images/community_news_1783894917459.png",
-    date: "৪ জুলাই ২০২৬",
-    excerpt: "সাম্প্রতিক সময়ে মুক্তিপ্রাপ্ত বেশ কয়েকটি দেশীয় চলচ্চিত্র দর্শকপ্রিয়তা অর্জন করেছে।",
-    content: "নতুন প্রজন্মের কাছে জনপ্রিয় হয়ে উঠছে দেশীয় চলচ্চিত্র। " + DUMMY_CONTENT,
-  },
-  {
-    id: "15",
-    title: "সুস্থ জীবনের জন্য নিয়মিত ব্যায়াম ও সঠিক খাদ্যাভ্যাস",
-    category: "লাইফস্টাইল",
-    image: "/images/sports_news_1783894897556.png",
-    date: "৩ জুলাই ২০২৬",
-    excerpt: "চিকিৎসকরা বলছেন, নিয়মিত ব্যায়াম এবং সঠিক খাদ্যাভ্যাস সুস্থ জীবনের মূল চাবিকাঠি।",
-    content: "সুস্থ জীবনের জন্য নিয়মিত ব্যায়াম ও সঠিক খাদ্যাভ্যাস। " + DUMMY_CONTENT,
-  },
-  {
-    id: "16",
-    title: "আজকের সর্বশেষ গুরুত্বপূর্ণ খবর: দিনভর যা ঘটলো",
-    category: "সর্বশেষ",
-    image: "/images/hero_news_oman_1783894879641.png",
-    date: "২ জুলাই ২০২৬",
-    excerpt: "সারাদিনের ঘটে যাওয়া গুরুত্বপূর্ণ ঘটনাগুলোর একনজর সারসংক্ষেপ।",
-    content: "আজকের সর্বশেষ গুরুত্বপূর্ণ খবর: দিনভর যা ঘটলো। " + DUMMY_CONTENT,
-  },
-];
+export const TRENDING_NEWS: NewsArticle[] = allPosts.slice(1, 10);
 
-export const LATEST_NEWS: NewsArticle[] = [
-  ...TRENDING_NEWS.slice(1, 5),
-  {
-    id: "7",
-    title: "ওমানে বাংলাদেশী হিন্দু নাগরিকের ইসলাম অবমাননা আইনি ব্যবস্থা চলছে",
-    category: "মধ্যপ্রাচ্য",
-    image: "/images/community_news_1783894917459.png",
-    date: "৮ জুলাই ২০২৬",
-    excerpt: "ওমানে একজন বাংলাদেশী হিন্দু নাগরিকের ইসলাম অবমাননার অভিযোগে আইনি ব্যবস্থা চলমান রয়েছে।",
-    content: "ওমানে বাংলাদেশী হিন্দু নাগরিকের ইসলাম অবমাননা আইনি ব্যবস্থা চলছে। " + DUMMY_CONTENT,
-  },
-  {
-    id: "11",
-    title: "কাতারে ফিফা বিশ্বকাপ ২০২৬ বাছাইপর্বের প্রস্তুতি শুরু",
-    category: "খেলাধুলা",
-    image: "/images/sports_news_1783894897556.png",
-    date: "৫ জুলাই ২০২৬",
-    excerpt: "কাতারে অনুষ্ঠিতব্য ফিফা বিশ্বকাপ ২০২৬-এর বাছাইপর্বের জন্য প্রস্তুতি শুরু হয়েছে।",
-    content: "কাতারে ফিফা বিশ্বকাপ ২০২৬ বাছাইপর্বের প্রস্তুতি শুরু হয়েছে। " + DUMMY_CONTENT,
-  },
-  {
-    id: "12",
-    title: "বাংলাদেশ-ভারত সীমান্তে নতুন বাণিজ্য চুক্তি স্বাক্ষর",
-    category: "আন্তর্জাতিক",
-    image: "/images/hero_news_oman_1783894879641.png",
-    date: "৪ জুলাই ২০২৬",
-    excerpt: "বাংলাদেশ ও ভারতের মধ্যে একটি নতুন বাণিজ্য চুক্তি স্বাক্ষরিত হয়েছে যা দ্বিপাক্ষিক বাণিজ্য বৃদ্ধি করবে।",
-    content: "বাংলাদেশ-ভারত সীমান্তে নতুন বাণিজ্য চুক্তি স্বাক্ষরিত হয়েছে। " + DUMMY_CONTENT,
-  },
-];
+export const LATEST_NEWS: NewsArticle[] = allPosts.slice(10);

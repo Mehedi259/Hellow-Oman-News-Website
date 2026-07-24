@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Mail, Phone, Send } from "lucide-react";
 import { FaFacebook, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 import { CATEGORIES } from "@/data/news";
@@ -33,8 +34,7 @@ export default function Footer() {
           {/* About Column */}
           <div className="space-y-4">
             <Link href="/" className="inline-block">
-              <h1 className="text-3xl font-bold text-white m-0 leading-tight">হ্যালো ওমান</h1>
-              <span className="text-xs font-semibold tracking-widest text-brand uppercase mt-0.5">বাংলা</span>
+              <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={200} height={50} className="h-12 w-auto brightness-0 invert" />
             </Link>
             <p className="text-sm leading-relaxed text-slate-400 mt-4">
               হ্যালো ওমান বাংলা - ওমান ও মধ্যপ্রাচ্যসহ বিশ্বজুড়ে থাকা প্রবাসী বাংলাদেশীদের জন্য সবচেয়ে নির্ভরযোগ্য ও জনপ্রিয় সংবাদ মাধ্যম। সত্য ও বস্তুনিষ্ঠ সংবাদ প্রকাশে আমরা বদ্ধপরিকর।
