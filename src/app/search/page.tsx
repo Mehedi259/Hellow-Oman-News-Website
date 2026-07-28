@@ -7,17 +7,21 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Search as SearchIcon } from "lucide-react";
-import { TOP_NEWS, TRENDING_NEWS, LATEST_NEWS } from "@/data/news";
+import { getAllNews } from "@/data/news";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
   const [searchQuery, setSearchQuery] = useState(query);
   const [results, setResults] = useState<any[]>([]);
+  const [allNews, setAllNews] = useState<any[]>([]);
+
+  useEffect(() => {
+    getAllNews().then(setAllNews);
+  }, []);
 
   useEffect(() => {
     if (searchQuery.trim()) {
-      const allNews = [TOP_NEWS, ...TRENDING_NEWS, ...LATEST_NEWS];
       const filtered = allNews.filter(
         (news) =>
           news.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -29,7 +33,7 @@ export default function SearchPage() {
     } else {
       setResults([]);
     }
-  }, [searchQuery]);
+  }, [searchQuery, allNews]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

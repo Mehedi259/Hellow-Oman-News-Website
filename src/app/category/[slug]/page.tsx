@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { CATEGORIES, TOP_NEWS, TRENDING_NEWS, LATEST_NEWS } from "@/data/news";
+import { CATEGORIES, getAllNews } from "@/data/news";
 
 export function generateStaticParams() {
   return CATEGORIES.map((category) => ({
@@ -19,7 +19,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
-  const allNews = [TOP_NEWS, ...TRENDING_NEWS, ...LATEST_NEWS];
+  const allNews = await getAllNews();
   const categoryNews = allNews.filter((news) => news.category === categoryName);
 
   return (
