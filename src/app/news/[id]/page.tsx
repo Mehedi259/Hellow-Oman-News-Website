@@ -3,10 +3,10 @@
 import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { TOP_NEWS, TRENDING_NEWS, LATEST_NEWS } from "@/data/news";
+import { getNewsBySlug, getLatestNews, NewsArticle } from "@/data/news";
 import { FaFacebook, FaTwitter, FaWhatsapp, FaLinkedin } from "react-icons/fa";
 import { Calendar, User, MessageCircle, Send } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -14,8 +14,9 @@ export default function NewsDetailsPage() {
   const params = useParams();
   const id = params?.id as string;
   
-  const allNews = [TOP_NEWS, ...TRENDING_NEWS, ...LATEST_NEWS];
-  const article = allNews.find((n) => n.id === id);
+  const [article, setArticle] = useState<NewsArticle | null>(null);
+  const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [comment, setComment] = useState("");
   const [commentName, setCommentName] = useState("");
@@ -25,12 +26,42 @@ export default function NewsDetailsPage() {
   ]);
   const [copiedLink, setCopiedLink] = useState(false);
 
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const [fetchedArticle, fetchedLatest] = await Promise.all([
+        getNewsBySlug(id),
+        getLatestNews()
+      ]);
+      if (fetchedArticle) {
+        setArticle(fetchedArticle);
+      }
+      setLatestNews(fetchedLatest);
+      setLoading(false);
+    };
+    if (id) {
+      loadData();
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="container mx-auto px-4 py-32 text-center text-xl font-medium text-slate-500">
+          সংবাদ লোড হচ্ছে...
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   if (!article) {
     notFound();
   }
 
   // Get related news from same category
-  const relatedNews = allNews
+  const relatedNews = latestNews
     .filter((news) => news.category === article.category && news.id !== article.id)
     .slice(0, 3);
 
@@ -262,7 +293,7 @@ export default function NewsDetailsPage() {
               সর্বশেষ সংবাদ
             </h3>
             <div className="flex flex-col gap-4">
-              {LATEST_NEWS.slice(0, 4).map((news) => (
+              {latestNews.slice(0, 4).map((news) => (
                 <Link href={`/news/${news.id}`} key={news.id} className="flex gap-4 group">
                   <div className="relative w-24 h-20 shrink-0 rounded-lg overflow-hidden">
                     <Image 

@@ -1,4 +1,4 @@
-import postsData from './backup/posts.json';
+import { fetchAPI } from '@/lib/api';
 
 export interface NewsArticle {
   id: string;
@@ -25,18 +25,7 @@ export const CATEGORIES = [
   "লাইফস্টাইল",
 ];
 
-// Helper to assign a relevant category based on keywords, defaulting to a rotating list
-function getCategoryForPost(title: string, index: number) {
-  if (title.includes('ওমান') || title.includes('প্রবাস') || title.includes('মাস্কাট') || title.includes('সালালাহ') || title.includes('বারকা') || title.includes('সুইক')) return 'প্রবাস';
-  if (title.includes('বাংলাদেশ') || title.includes('ঢাকা') || title.includes('সিলেট') || title.includes('চট্টগ্রাম') || title.includes('উত্তরা')) return 'বাংলাদেশ';
-  if (title.includes('সৌদি') || title.includes('দুবাই') || title.includes('আমিরাত') || title.includes('কাতার') || title.includes('শারজাহ')) return 'মধ্যপ্রাচ্য';
-  if (title.includes('ফুটবল') || title.includes('ক্রিকেট') || title.includes('বিশ্বকাপ')) return 'খেলাধুলা';
-  
-  const cats = ["সর্বশেষ", "আন্তর্জাতিক", "রাজনীতি", "অর্থনীতি"];
-  return cats[index % cats.length];
-}
-
-function formatDate(dateStr: string) {
+export function formatDate(dateStr: string) {
   try {
     const d = new Date(dateStr);
     if (isNaN(d.getTime())) return dateStr;
@@ -46,7 +35,6 @@ function formatDate(dateStr: string) {
     let day = d.getDate().toString();
     let year = d.getFullYear().toString();
     
-    // convert numbers to bangla
     day = day.split('').map(n => bnNums[parseInt(n)] || n).join('');
     year = year.split('').map(n => bnNums[parseInt(n)] || n).join('');
     
@@ -56,36 +44,58 @@ function formatDate(dateStr: string) {
   }
 }
 
-const allPosts: NewsArticle[] = postsData.map((post, index) => {
-  // Fix the HTML entities in excerpt and content if any
-  let cleanDescription = (post.description || "").replace(/&#160;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"');
-  
-  // If description is empty or too short, fallback
-  if (!cleanDescription || cleanDescription.trim().length < 10) {
-    cleanDescription = (post.content || "").replace(/<[^>]*>?/gm, '').substring(0, 150) + "...";
-  }
-
+// Map backend Post model to frontend NewsArticle
+const mapToNewsArticle = (post: any): NewsArticle => {
   return {
-    id: post.id.toString(),
-    title: post.title.replace(/&amp;lsquo;|&amp;rsquo;|&ldquo;|&rdquo;/g, "'"),
-    category: getCategoryForPost(post.title, index),
-    image: post.localImage || "/images/hero_news_oman_1783894879641.png",
-    date: formatDate(post.pubDate) || "১৩ জুলাই ২০২৬",
-    excerpt: cleanDescription.substring(0, 200),
-    content: post.content || post.description || "",
+    id: post.slug || post._id,
+    title: post.title,
+    category: post.category?.name || "সর্বশেষ",
+    image: post.image || "/images/hero_news_oman_1783894879641.png",
+    date: formatDate(post.createdAt || new Date().toISOString()),
+    excerpt: post.excerpt || (post.content ? post.content.substring(0, 150) + "..." : ""),
+    content: post.content || "",
   };
-});
-
-export const TOP_NEWS: NewsArticle = allPosts[0] || {
-  id: "1",
-  title: "ওমানে সিলেট টু ওমান প্রবাসী ফোরামের আলোচনা সভা অনুষ্ঠিত",
-  category: "প্রবাস",
-  image: "/images/hero_news_oman_1783894879641.png",
-  date: "১৩ জুলাই ২০২৬",
-  excerpt: "ওমানের রাজধানী মাস্কাটে সিলেট টু ওমান প্রবাসী ফোরামের এক বিশেষ আলোচনা সভা অনুষ্ঠিত হয়েছে।",
-  content: "ওমানের রাজধানী মাস্কাটে সিলেট টু ওমান প্রবাসী ফোরামের এক বিশেষ আলোচনা সভা অনুষ্ঠিত হয়েছে।",
 };
 
-export const TRENDING_NEWS: NewsArticle[] = allPosts.slice(1, 10);
+export async function getAllNews(): Promise<NewsArticle[]> {
+  try {
+    const res = await fetchAPI('/posts?status=published');
+    if (res.success && res.data) {
+      return res.data.map(mapToNewsArticle);
+    }
+    return [];
+  } catch (error) {
+    console.error("Failed to fetch news:", error);
+    return [];
+  }
+}
 
-export const LATEST_NEWS: NewsArticle[] = allPosts.slice(10);
+export async function getNewsBySlug(slug: string): Promise<NewsArticle | null> {
+  try {
+    const res = await fetchAPI(`/posts/slug/${slug}`);
+    if (res.success && res.data) {
+      return mapToNewsArticle(res.data);
+    }
+    return null;
+  } catch (error) {
+    console.error("Failed to fetch news by slug:", error);
+    return null;
+  }
+}
+
+// Helper functions for specific sections (you can modify backend to support these filters directly later)
+export async function getTopNews(): Promise<NewsArticle | null> {
+  const news = await getAllNews();
+  return news.length > 0 ? news[0] : null;
+}
+
+export async function getTrendingNews(): Promise<NewsArticle[]> {
+  const news = await getAllNews();
+  return news.slice(1, 10);
+}
+
+export async function getLatestNews(): Promise<NewsArticle[]> {
+  const news = await getAllNews();
+  return news.slice(0, 15); // get first 15 for latest
+}
+

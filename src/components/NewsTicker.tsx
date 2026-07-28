@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { Flame } from "lucide-react";
-import { TOP_NEWS, TRENDING_NEWS } from "@/data/news";
+import { NewsArticle } from "@/data/news";
 
-export default function NewsTicker() {
-  const allTickerNews = [TOP_NEWS, ...TRENDING_NEWS];
+export default function NewsTicker({ allTickerNews }: { allTickerNews: NewsArticle[] }) {
+  if (!allTickerNews || allTickerNews.length === 0) return null;
 
   return (
     <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 overflow-hidden">

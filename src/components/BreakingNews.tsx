@@ -3,17 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AlertCircle, X } from "lucide-react";
+import { NewsArticle } from "@/data/news";
 
-const BREAKING_NEWS = {
-  id: "breaking-1",
-  title: "জরুরি: ওমানে সাইক্লোন সতর্কতা জারি, প্রবাসীদের সতর্ক থাকার আহ্বান",
-  link: "/news/1",
-};
-
-export default function BreakingNews() {
+export default function BreakingNews({ article }: { article?: NewsArticle }) {
   const [isVisible, setIsVisible] = useState(true);
 
-  if (!isVisible) return null;
+  if (!isVisible || !article) return null;
 
   return (
     <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-2 relative overflow-hidden">
@@ -27,11 +22,11 @@ export default function BreakingNews() {
         
         <div className="flex-1 overflow-hidden">
           <Link 
-            href={BREAKING_NEWS.link}
+            href={`/news/${article.id}`}
             className="block hover:underline"
           >
             <p className="text-sm md:text-base font-medium animate-[ticker_25s_linear_infinite] hover:[animation-play-state:paused] whitespace-nowrap">
-              {BREAKING_NEWS.title}
+              {article.title}
             </p>
           </Link>
         </div>
