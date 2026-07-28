@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import BreakingNews from "@/components/BreakingNews";
 import { getLatestNews, getTopNews, getTrendingNews } from "@/data/news";
 
+export const revalidate = 60;
+
 export default async function Home() {
   const latestNews = await getLatestNews();
   const trendingNews = await getTrendingNews();
