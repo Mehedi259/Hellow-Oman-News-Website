@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Search, MapPin, Calendar, Mail, Send, X, Sun, Moon } from "lucide-react";
+import { Menu, Search, MapPin, Calendar, Mail, Send, X, Bell } from "lucide-react";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { CATEGORIES } from "@/data/news";
 import NewsletterModal from "./NewsletterModal";
@@ -15,8 +15,14 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const router = useRouter();
-  const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    const handleToggleMenu = () => setIsMobileMenuOpen(prev => !prev);
+    window.addEventListener('toggleMobileMenu', handleToggleMenu);
+    return () => window.removeEventListener('toggleMobileMenu', handleToggleMenu);
+  }, []);
 
   const currentDate = new Date().toLocaleDateString("bn-BD", {
     day: "numeric",
@@ -33,10 +39,19 @@ export default function Header() {
     }
   };
 
+  const scrollCategories = [
+    { name: "সর্বশেষ", link: "/" },
+    { name: "জাতীয়", link: "/category/বাংলাদেশ" },
+    { name: "রাজনীতি", link: "/category/রাজনীতি" },
+    { name: "আন্তর্জাতিক", link: "/category/আন্তর্জাতিক" },
+    { name: "অর্থনীতি", link: "/category/অর্থনীতি" },
+    { name: "খেলা", link: "/category/খেলাধুলা" },
+  ];
+
   return (
-    <header className="sticky top-0 z-50 glass-header">
-      {/* Top Bar */}
-      <div className="bg-brand text-white text-xs md:text-sm py-2">
+    <header className="sticky top-0 z-50 glass-header bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 relative">
+      {/* Top Bar (Hidden on Mobile) */}
+      <div className="hidden md:block bg-brand text-white text-xs md:text-sm py-2">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-2 md:space-x-4 overflow-hidden">
             <span className="flex items-center gap-1 whitespace-nowrap text-[10px] sm:text-xs md:text-sm">
@@ -46,7 +61,7 @@ export default function Header() {
               <Calendar size={12} className="md:w-3.5 md:h-3.5" /> {currentDate}
             </span>
           </div>
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="flex items-center space-x-4">
             <Link href="#" className="hover:text-gray-300 transition-colors"><FaFacebook size={16} /></Link>
             <Link href="#" className="hover:text-gray-300 transition-colors"><FaTwitter size={16} /></Link>
             <Link href="#" className="hover:text-gray-300 transition-colors"><Mail size={16} /></Link>
@@ -56,19 +71,19 @@ export default function Header() {
       </div>
 
       {/* Main Header */}
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-3 md:py-4">
         <div className="flex justify-between items-center gap-2">
           {/* Mobile Menu Button */}
           <button 
             className="md:hidden p-2 -ml-2 text-foreground shrink-0"
             onClick={() => setIsMobileMenuOpen(true)}
           >
-            <Menu size={32} />
+            <Menu size={24} />
           </button>
 
           {/* Logo */}
           <Link href="/" className="flex flex-col items-center mx-auto md:mx-0 shrink-0">
-            <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={200} height={50} className="h-10 sm:h-12 w-auto" />
+            <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={200} height={50} className="h-8 sm:h-10 md:h-12 w-auto" />
           </Link>
 
           {/* Desktop Right Actions */}
@@ -87,16 +102,60 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Mobile Search & Theme Button */}
-          <div className="md:hidden flex items-center gap-2">
+          {/* Mobile Search & Bell */}
+          <div className="md:hidden flex items-center gap-1 relative">
             <button 
               onClick={() => setIsSearchOpen(true)}
               className="p-2 text-foreground"
             >
-              <Search size={24} />
+              <Search size={20} />
             </button>
+            <button 
+              className="p-2 text-foreground relative"
+              onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+            >
+              <Bell size={20} />
+              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-slate-900"></span>
+            </button>
+            
+            {/* Notifications Dropdown */}
+            {isNotificationsOpen && (
+              <>
+                <div 
+                  className="fixed inset-0 z-40" 
+                  onClick={() => setIsNotificationsOpen(false)}
+                />
+                <div className="absolute top-full right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 z-50 overflow-hidden">
+                  <div className="p-3 border-b border-slate-100 dark:border-slate-800 font-bold text-sm bg-slate-50 dark:bg-slate-800/50">
+                    নোটিফিকেশন
+                  </div>
+                  <div className="p-6 flex flex-col items-center justify-center text-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+                      <Bell size={18} />
+                    </div>
+                    <p className="text-slate-500 dark:text-slate-400 text-[13px]">কোনো নতুন নোটিফিকেশন নেই</p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
+      </div>
+
+      {/* Mobile Scrollable Categories */}
+      <div className="md:hidden border-t border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar">
+        <ul className="flex items-center px-4 py-2 space-x-6 min-w-max">
+          {scrollCategories.map((category, index) => (
+            <li key={category.name}>
+              <Link 
+                href={category.link}
+                className={`text-[15px] font-medium transition-colors whitespace-nowrap pb-2 block ${index === 0 ? 'text-brand border-b-2 border-brand' : 'text-slate-600 dark:text-slate-400 hover:text-brand'}`}
+              >
+                {category.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Desktop Navigation */}

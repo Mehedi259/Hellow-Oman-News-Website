@@ -1,14 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { NewsArticle } from "@/data/news";
+import HeroSliderMobile from "./HeroSliderMobile";
 
 export default function HeroSection({ topNews, trendingNews }: { topNews: NewsArticle | null, trendingNews: NewsArticle[] }) {
   if (!topNews) return null;
 
+  const sliderNews = [topNews, ...trendingNews.slice(0, 4)];
+
   return (
-    <section className="py-6">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <section className="py-2 md:py-6">
+      <div className="container mx-auto px-4 md:px-4 px-0">
+        
+        {/* Mobile Auto Slider (Visible only on mobile) */}
+        <HeroSliderMobile sliderNews={sliderNews} />
+
+        {/* Desktop Layout */}
+        <div className="hidden md:grid grid-cols-1 lg:grid-cols-12 gap-6 px-4 md:px-0">
           
           {/* Main Article (Left) */}
           <div className="lg:col-span-8">

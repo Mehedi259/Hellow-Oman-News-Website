@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Flame } from "lucide-react";
+import { Zap } from "lucide-react";
 import { NewsArticle } from "@/data/news";
 
 export default function NewsTicker({ allTickerNews }: { allTickerNews: NewsArticle[] }) {
@@ -11,14 +11,13 @@ export default function NewsTicker({ allTickerNews }: { allTickerNews: NewsArtic
     <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 overflow-hidden">
       <div className="container mx-auto px-4 flex items-center relative">
         {/* Label */}
-        <div className="bg-brand text-white px-3 py-1.5 rounded text-sm font-bold flex items-center gap-2 z-10 shrink-0 shadow-md">
-          <Flame size={16} className="animate-pulse" /> শিরোনাম
+        <div className="bg-red-600 text-white px-3 py-1 rounded-md text-sm font-bold flex items-center gap-1.5 z-10 shrink-0 shadow-sm">
+          <Zap size={16} fill="currentColor" className="animate-pulse" /> ব্রেকিং
         </div>
         
         {/* Ticker Content */}
         <div className="flex-1 overflow-hidden relative ml-4">
-          {/* Using a simple CSS marquee for smooth infinite scroll */}
-          <div className="whitespace-nowrap animate-[ticker_30s_linear_infinite] hover:[animation-play-state:paused] flex gap-8">
+          <div className="whitespace-nowrap animate-ticker hover:[animation-play-state:paused] flex gap-8">
             {allTickerNews.map((news, i) => (
               <Link 
                 key={`${news.id}-${i}`} 
