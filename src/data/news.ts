@@ -67,7 +67,7 @@ const backupPosts: NewsArticle[] = postsData.map((post, index) => {
 
   return {
     id: post.id.toString(),
-    title: post.title.replace(/&amp;lsquo;|&amp;rsquo;|&ldquo;|&rdquo;/g, "'"),
+    title: post.title.replace(/(&amp;)?(lsquo|rsquo|#039);/g, "'").replace(/(&amp;)?(ldquo|rdquo|quot);/g, '"'),
     category: getCategoryForPost(post.title, index),
     image: post.localImage || "/images/hero_news_oman_1783894879641.png",
     date: formatDate(post.pubDate) || "১৩ জুলাই ২০২৬",
