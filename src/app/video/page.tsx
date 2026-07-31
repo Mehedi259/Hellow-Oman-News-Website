@@ -17,7 +17,7 @@ export default function VideoPage() {
         const response = await fetch('/api/videos');
         const data = await response.json();
         if (data.success) {
-          setVideos(data.data);
+          setVideos(data.data.reverse());
         }
       } catch (error) {
         console.error('Failed to fetch videos:', error);

@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import BreakingNews from "@/components/BreakingNews";
 import CategoryQuickLinks from "@/components/CategoryQuickLinks";
 import LatestNewsList from "@/components/LatestNewsList";
+import VideoGalleryHome from "@/components/VideoGalleryHome";
 import { getLatestNews, getTopNews, getTrendingNews } from "@/data/news";
 
 export const revalidate = 60;
@@ -54,6 +55,8 @@ export default async function Home() {
           articles={trendingNews} 
           categoryLink="/category/%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AC%E0%A6%BE%E0%A6%B8"
         />
+
+        <VideoGalleryHome />
       </main>
       <Footer />
     </>
