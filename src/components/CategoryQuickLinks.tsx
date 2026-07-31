@@ -20,7 +20,7 @@ export default function CategoryQuickLinks() {
 
   return (
     <div className="container mx-auto px-4 py-3 md:hidden">
-      <div className="grid grid-cols-4 gap-y-4 gap-x-2 px-2 py-4 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+      <div className="flex overflow-x-auto no-scrollbar gap-5 px-3 py-4 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
         {categories.map((cat, idx) => {
           const Icon = cat.icon;
           return (
@@ -28,7 +28,8 @@ export default function CategoryQuickLinks() {
               key={idx} 
               href={cat.link} 
               onClick={cat.onClick}
-              className="flex flex-col items-center justify-center gap-1.5"
+              className="flex flex-col items-center justify-center gap-1.5 shrink-0"
+              style={{ minWidth: '64px' }}
             >
               <div className={`w-12 h-12 rounded-full flex items-center justify-center ${cat.bg} ${cat.color} shadow-sm border border-black/5 dark:border-white/5`}>
                 <Icon size={22} strokeWidth={1.5} />
