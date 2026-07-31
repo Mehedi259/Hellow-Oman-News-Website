@@ -1,5 +1,4 @@
 import { fetchAPI } from '@/lib/api';
-import postsData from './backup/posts.json';
 
 export interface NewsArticle {
   id: string;
@@ -45,45 +44,14 @@ export function formatDate(dateStr: string) {
   }
 }
 
-// Helper to assign a relevant category based on keywords, defaulting to a rotating list
-function getCategoryForPost(title: string, index: number) {
-  if (title.includes('ওমান') || title.includes('প্রবাস') || title.includes('মাস্কাট') || title.includes('সালালাহ') || title.includes('বারকা') || title.includes('সুইক')) return 'প্রবাস';
-  if (title.includes('বাংলাদেশ') || title.includes('ঢাকা') || title.includes('সিলেট') || title.includes('চট্টগ্রাম') || title.includes('উত্তরা')) return 'বাংলাদেশ';
-  if (title.includes('সৌদি') || title.includes('দুবাই') || title.includes('আমিরাত') || title.includes('কাতার') || title.includes('শারজাহ')) return 'মধ্যপ্রাচ্য';
-  if (title.includes('ফুটবল') || title.includes('ক্রিকেট') || title.includes('বিশ্বকাপ')) return 'খেলাধুলা';
-  
-  const cats = ["সর্বশেষ", "আন্তর্জাতিক", "রাজনীতি", "অর্থনীতি"];
-  return cats[index % cats.length];
-}
-
-const backupPosts: NewsArticle[] = postsData.map((post, index) => {
-  // Fix the HTML entities in excerpt and content if any
-  let cleanDescription = (post.description || "").replace(/&#160;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"');
-  
-  // If description is empty or too short, fallback
-  if (!cleanDescription || cleanDescription.trim().length < 10) {
-    cleanDescription = (post.content || "").replace(/<[^>]*>?/gm, '').substring(0, 150) + "...";
-  }
-
-  return {
-    id: post.id.toString(),
-    title: post.title.replace(/(&amp;)?(lsquo|rsquo|#039);/g, "'").replace(/(&amp;)?(ldquo|rdquo|quot);/g, '"'),
-    category: getCategoryForPost(post.title, index),
-    image: post.localImage || "/images/hero_news_oman_1783894879641.png",
-    date: formatDate(post.pubDate) || "১৩ জুলাই ২০২৬",
-    excerpt: cleanDescription.substring(0, 200),
-    content: post.content || post.description || "",
-  };
-});
-
 // Map backend Post model to frontend NewsArticle
 const mapToNewsArticle = (post: any): NewsArticle => {
   return {
-    id: post.slug || post._id,
+    id: post.slug || post.id,
     title: post.title,
     category: post.category?.name || "সর্বশেষ",
     image: post.image || "/images/hero_news_oman_1783894879641.png",
-    date: formatDate(post.createdAt || new Date().toISOString()),
+    date: formatDate(post.created_at || new Date().toISOString()),
     excerpt: post.excerpt || (post.content ? post.content.substring(0, 150) + "..." : ""),
     content: post.content || "",
   };
@@ -92,14 +60,13 @@ const mapToNewsArticle = (post: any): NewsArticle => {
 export async function getAllNews(): Promise<NewsArticle[]> {
   try {
     const res = await fetchAPI('/posts?status=published');
-    let apiPosts: NewsArticle[] = [];
     if (res.success && res.data) {
-      apiPosts = res.data.map(mapToNewsArticle);
+      return res.data.map(mapToNewsArticle);
     }
-    return [...apiPosts, ...backupPosts];
+    return [];
   } catch (error) {
     console.error("Failed to fetch news:", error);
-    return backupPosts;
+    return [];
   }
 }
 
@@ -112,13 +79,9 @@ export async function getNewsBySlug(slug: string): Promise<NewsArticle | null> {
   } catch (error) {
     console.error("Failed to fetch news by slug:", error);
   }
-  
-  // Fallback to backup data
-  const backupPost = backupPosts.find(p => p.id === slug);
-  return backupPost || null;
+  return null;
 }
 
-// Helper functions for specific sections (you can modify backend to support these filters directly later)
 export async function getTopNews(): Promise<NewsArticle | null> {
   const news = await getAllNews();
   return news.length > 0 ? news[0] : null;
@@ -131,6 +94,5 @@ export async function getTrendingNews(): Promise<NewsArticle[]> {
 
 export async function getLatestNews(): Promise<NewsArticle[]> {
   const news = await getAllNews();
-  return news.slice(0, 15); // get first 15 for latest
+  return news.slice(0, 15);
 }
-

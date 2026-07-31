@@ -121,7 +121,7 @@ export default function NewsDetailsPage() {
               <div className="flex flex-wrap items-center gap-4 md:gap-8 text-sm text-slate-500 mb-8 border-y border-slate-100 dark:border-slate-800 py-3">
                 <div className="flex items-center gap-2">
                   <User size={16} /> 
-                  <span>ডেস্ক রিপোর্ট</span>
+                  <span>সম্পাদক: মুসা ইমন</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar size={16} /> 
