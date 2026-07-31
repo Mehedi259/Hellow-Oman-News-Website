@@ -4,8 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Clock, Bookmark } from "lucide-react";
 import { NewsArticle } from "@/data/news";
+import { useSavedNews } from "@/hooks/useSavedNews";
 
 export default function LatestNewsList({ title, articles, categoryLink }: { title: string, articles: NewsArticle[], categoryLink?: string }) {
+  const { toggleSave, isSaved } = useSavedNews();
+
   if (!articles || articles.length === 0) return null;
 
   return (
@@ -43,8 +46,11 @@ export default function LatestNewsList({ title, articles, categoryLink }: { titl
                     <span className="flex items-center gap-1 text-[11px] text-slate-500">
                       <Clock size={12} /> ২ ঘন্টা আগে
                     </span>
-                    <button className="text-slate-400 hover:text-red-500 transition-colors" onClick={(e) => { e.preventDefault(); /* save functionality */ }}>
-                      <Bookmark size={16} strokeWidth={1.5} />
+                    <button 
+                      className={`transition-colors p-1 -mr-1 ${isSaved(news.id) ? 'text-green-500' : 'text-slate-400 hover:text-green-500'}`} 
+                      onClick={(e) => { e.preventDefault(); toggleSave(news); }}
+                    >
+                      <Bookmark size={16} strokeWidth={1.5} className={isSaved(news.id) ? 'fill-green-500' : ''} />
                     </button>
                   </div>
                 </div>
