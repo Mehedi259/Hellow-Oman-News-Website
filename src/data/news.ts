@@ -8,6 +8,8 @@ export interface NewsArticle {
   date: string;
   excerpt?: string;
   content?: string;
+  reporter?: string;
+  published_date?: string;
 }
 
 export const CATEGORIES = [
@@ -51,9 +53,11 @@ const mapToNewsArticle = (post: any): NewsArticle => {
     title: post.title,
     category: post.category?.name || "সর্বশেষ",
     image: post.image || "/images/hero_news_oman_1783894879641.png",
-    date: formatDate(post.created_at || new Date().toISOString()),
+    date: formatDate(post.published_date || post.created_at || new Date().toISOString()),
     excerpt: post.excerpt || (post.content ? post.content.substring(0, 150) + "..." : ""),
     content: post.content || "",
+    reporter: post.reporter || "",
+    published_date: post.published_date || post.created_at || new Date().toISOString(),
   };
 };
 
