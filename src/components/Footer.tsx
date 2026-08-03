@@ -27,31 +27,32 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-slate-50 text-slate-600 pt-16 pb-8 border-t-[4px] border-brand mt-12">
+    <footer className="bg-slate-950 text-slate-400 pt-16 pb-8 border-t-[4px] border-brand mt-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           
           {/* About Column */}
           <div className="space-y-4 lg:col-span-1">
             <Link href="/" className="inline-block">
-              <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={200} height={50} className="h-12 w-auto" />
+              {/* Note: You might want a white version of the logo for the dark footer if it's currently dark */}
+              <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={200} height={50} className="h-12 w-auto brightness-0 invert" />
             </Link>
-            <p className="text-sm leading-relaxed text-slate-600 mt-4">
+            <p className="text-sm leading-relaxed text-slate-400 mt-4">
               হ্যালো ওমান বাংলা - ওমান ও মধ্যপ্রাচ্যসহ বিশ্বজুড়ে থাকা প্রবাসী বাংলাদেশীদের জন্য সবচেয়ে নির্ভরযোগ্য ও জনপ্রিয় সংবাদ মাধ্যম। সত্য ও বস্তুনিষ্ঠ সংবাদ প্রকাশে আমরা বদ্ধপরিকর।
               <br /><br />
               <strong className="text-brand">সম্পাদক ও প্রকাশক:</strong> মুসা ইমন
             </p>
             <div className="flex items-center gap-4 pt-2">
-              <a href="#" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-brand hover:text-white hover:border-brand transition-colors">
+              <a href="#" className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-brand hover:text-white hover:border-brand transition-colors">
                 <FaFacebook size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-brand hover:text-white hover:border-brand transition-colors">
+              <a href="#" className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-brand hover:text-white hover:border-brand transition-colors">
                 <FaTwitter size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-brand hover:text-white hover:border-brand transition-colors">
+              <a href="#" className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-brand hover:text-white hover:border-brand transition-colors">
                 <FaYoutube size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-brand hover:text-white hover:border-brand transition-colors">
+              <a href="#" className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-brand hover:text-white hover:border-brand transition-colors">
                 <FaInstagram size={18} />
               </a>
             </div>
@@ -59,10 +60,10 @@ export default function Footer() {
 
           {/* Newsletter Column */}
           <div className="lg:col-span-1">
-            <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
               <span className="w-2 h-6 bg-brand rounded-sm"></span> নিউজলেটার
             </h3>
-            <p className="text-sm text-slate-600 mb-4">
+            <p className="text-sm text-slate-400 mb-4">
               সর্বশেষ খবর ও আপডেট পেতে আমাদের নিউজলেটার সাবস্ক্রাইব করুন
             </p>
             <form onSubmit={handleNewsletterSubmit} className="space-y-3">
@@ -73,7 +74,7 @@ export default function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="আপনার ইমেইল"
                   required
-                  className="w-full px-4 py-3 pr-12 rounded-lg bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-sm"
+                  className="w-full px-4 py-3 pr-12 rounded-lg bg-slate-900 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-sm"
                 />
                 <button
                   type="submit"
@@ -84,14 +85,14 @@ export default function Footer() {
                 </button>
               </div>
               {message && (
-                <p className="text-xs text-green-600">{message}</p>
+                <p className="text-xs text-green-500">{message}</p>
               )}
             </form>
           </div>
 
           {/* Categories */}
           <div className="lg:col-span-1">
-            <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
               <span className="w-2 h-6 bg-brand rounded-sm"></span> সংবাদ বিভাগ
             </h3>
             <ul className="grid grid-cols-2 gap-y-3 gap-x-4">
@@ -99,9 +100,9 @@ export default function Footer() {
                 <li key={`footer-${category}`}>
                   <Link 
                     href={category === "প্রচ্ছদ" ? "/" : `/category/${category}`}
-                    className="text-sm text-slate-600 hover:text-brand transition-colors flex items-center gap-2"
+                    className="text-sm text-slate-400 hover:text-brand transition-colors flex items-center gap-2"
                   >
-                    <span className="w-1.5 h-1.5 bg-slate-300 rounded-full"></span>
+                    <span className="w-1.5 h-1.5 bg-slate-700 rounded-full"></span>
                     {category}
                   </Link>
                 </li>
@@ -113,35 +114,35 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-4 md:col-span-2 lg:col-span-2">
             {/* Quick Links */}
             <div>
-              <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
                 <span className="w-2 h-6 bg-brand rounded-sm"></span> প্রয়োজনীয় লিংক
               </h3>
               <ul className="space-y-3">
-                <li><Link href="/about" className="text-sm text-slate-600 hover:text-brand transition-colors">আমাদের সম্পর্কে</Link></li>
-                <li><Link href="/contact" className="text-sm text-slate-600 hover:text-brand transition-colors">যোগাযোগ করুন</Link></li>
-                <li><Link href="#" className="text-sm text-slate-600 hover:text-brand transition-colors">বিজ্ঞাপন দিন</Link></li>
-                <li><Link href="/privacy" className="text-sm text-slate-600 hover:text-brand transition-colors">গোপনীয়তা নীতি</Link></li>
-                <li><Link href="/terms" className="text-sm text-slate-600 hover:text-brand transition-colors">ব্যবহারের শর্তাবলী</Link></li>
+                <li><Link href="/about" className="text-sm text-slate-400 hover:text-brand transition-colors">আমাদের সম্পর্কে</Link></li>
+                <li><Link href="/contact" className="text-sm text-slate-400 hover:text-brand transition-colors">যোগাযোগ করুন</Link></li>
+                <li><Link href="#" className="text-sm text-slate-400 hover:text-brand transition-colors">বিজ্ঞাপন দিন</Link></li>
+                <li><Link href="/privacy" className="text-sm text-slate-400 hover:text-brand transition-colors">গোপনীয়তা নীতি</Link></li>
+                <li><Link href="/terms" className="text-sm text-slate-400 hover:text-brand transition-colors">ব্যবহারের শর্তাবলী</Link></li>
               </ul>
             </div>
 
             {/* Contact */}
             <div>
-              <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
                 <span className="w-2 h-6 bg-brand rounded-sm"></span> যোগাযোগ
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-2">
                   <MapPin size={18} className="text-brand shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-600">রুই, মাস্কাট, ওমান। <br />ঢাকা অফিস: কারওয়ান বাজার, ঢাকা।</span>
+                  <span className="text-sm text-slate-400">রুই, মাস্কাট, ওমান। <br />ঢাকা অফিস: কারওয়ান বাজার, ঢাকা।</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Mail size={18} className="text-brand shrink-0" />
-                  <span className="text-sm text-slate-600 overflow-hidden text-ellipsis" style={{ wordBreak: 'break-all' }}>news@helloomanbangla.com</span>
+                  <span className="text-sm text-slate-400 overflow-hidden text-ellipsis" style={{ wordBreak: 'break-all' }}>news@helloomanbangla.com</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone size={18} className="text-brand shrink-0" />
-                  <span className="text-sm text-slate-600">+968 1234 5678</span>
+                  <span className="text-sm text-slate-400">+968 1234 5678</span>
                 </li>
               </ul>
             </div>
@@ -151,7 +152,7 @@ export default function Footer() {
       </div>
       
       {/* Copyright */}
-      <div className="border-t border-slate-200 pt-6 mt-6">
+      <div className="border-t border-slate-800 pt-6 mt-6">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} হ্যালো ওমান বাংলা। সর্বস্বত্ব সংরক্ষিত।</p>
           <p>ডেভেলপমেন্ট পার্টনার: মুসাফ্লাই আইটি</p>

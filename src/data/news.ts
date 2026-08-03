@@ -100,3 +100,8 @@ export async function getLatestNews(): Promise<NewsArticle[]> {
   const news = await getAllNews();
   return news.slice(0, 15);
 }
+
+export async function getNewsByCategoryName(categoryName: string, limit: number = 8): Promise<NewsArticle[]> {
+  const news = await getAllNews();
+  return news.filter((n) => n.category === categoryName).slice(0, limit);
+}

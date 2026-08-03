@@ -7,7 +7,8 @@ import BreakingNews from "@/components/BreakingNews";
 import CategoryQuickLinks from "@/components/CategoryQuickLinks";
 import LatestNewsList from "@/components/LatestNewsList";
 import VideoGalleryHome from "@/components/VideoGalleryHome";
-import { getLatestNews, getTopNews, getTrendingNews } from "@/data/news";
+import MusaflyAd from "@/components/MusaflyAd";
+import { getLatestNews, getTopNews, getTrendingNews, getNewsByCategoryName } from "@/data/news";
 
 export const revalidate = 60;
 
@@ -15,6 +16,12 @@ export default async function Home() {
   const latestNews = await getLatestNews();
   const trendingNews = await getTrendingNews();
   const topNews = await getTopNews();
+
+  const probashNews = await getNewsByCategoryName("প্রবাস", 8);
+  const nationalNews = await getNewsByCategoryName("বাংলাদেশ", 8);
+  const politicsNews = await getNewsByCategoryName("রাজনীতি", 8);
+  const sportsNews = await getNewsByCategoryName("খেলাধুলা", 8);
+  const entertainmentNews = await getNewsByCategoryName("বিনোদন", 8);
 
   return (
     <>
@@ -27,12 +34,8 @@ export default async function Home() {
         {/* Mobile Quick Links */}
         <CategoryQuickLinks />
         
-        {/* Ad Space Placeholder */}
-        <div className="container mx-auto px-4 my-2 md:my-8 hidden md:block">
-          <div className="bg-slate-200 dark:bg-slate-800 w-full h-[90px] md:h-[120px] flex items-center justify-center rounded-lg border border-dashed border-slate-300 dark:border-slate-700">
-            <span className="text-slate-400 font-semibold text-sm">বিজ্ঞাপন স্থান</span>
-          </div>
-        </div>
+        {/* Ad Space */}
+        <MusaflyAd />
 
         {/* Mobile Latest News List */}
         <LatestNewsList 
@@ -52,8 +55,32 @@ export default async function Home() {
         
         <CategorySection 
           title="প্রবাস" 
-          articles={trendingNews} 
-          categoryLink="/category/%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AC%E0%A6%BE%E0%A6%B8"
+          articles={probashNews} 
+          categoryLink="/category/প্রবাস"
+        />
+        
+        <CategorySection 
+          title="জাতীয়" 
+          articles={nationalNews} 
+          categoryLink="/category/বাংলাদেশ"
+        />
+
+        <CategorySection 
+          title="রাজনীতি" 
+          articles={politicsNews} 
+          categoryLink="/category/রাজনীতি"
+        />
+
+        <CategorySection 
+          title="খেলাধুলা" 
+          articles={sportsNews} 
+          categoryLink="/category/খেলাধুলা"
+        />
+
+        <CategorySection 
+          title="বিনোদন" 
+          articles={entertainmentNews} 
+          categoryLink="/category/বিনোদন"
         />
 
         <VideoGalleryHome />
