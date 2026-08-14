@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Mail, Phone, Send } from "lucide-react";
+import { MapPin, Mail, Phone, Send, MessageCircle } from "lucide-react";
 import { FaFacebook, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 import { CATEGORIES } from "@/data/news";
 
@@ -145,6 +145,19 @@ export default function Footer() {
                   <span className="text-sm text-slate-400">+968 1234 5678</span>
                 </li>
               </ul>
+              
+              <div className="mt-6 pt-6 border-t border-slate-800">
+                <h4 className="text-sm font-bold text-white mb-3">বিজ্ঞাপনের জন্য যোগাযোগ করুন</h4>
+                <a 
+                  href="https://wa.me/96878147442?text=আমি%20বিজ্ঞাপন%20দিতে%20চাই" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm text-slate-400 hover:text-brand transition-colors"
+                >
+                  <MessageCircle size={18} className="text-brand shrink-0" />
+                  <span>+968 78147442 (WhatsApp)</span>
+                </a>
+              </div>
             </div>
           </div>
           
@@ -155,7 +168,10 @@ export default function Footer() {
       <div className="border-t border-slate-800 pt-6 mt-6">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} হ্যালো ওমান বাংলা। সর্বস্বত্ব সংরক্ষিত।</p>
-          <p>ডেভেলপমেন্ট পার্টনার: মুসাফ্লাই আইটি</p>
+          <div className="text-right">
+            <p>ডেভেলপমেন্ট পার্টনার: মুসাফ্লাই আইটি</p>
+            <p className="mt-1 font-medium">Developed by Hello Oman Tech</p>
+          </div>
         </div>
       </div>
     </footer>
