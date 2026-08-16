@@ -6,6 +6,7 @@ import { Bookmark, Clock, Trash2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSavedNews } from "@/hooks/useSavedNews";
+import { getRelativeTime } from "@/data/news";
 
 export default function SavedNewsPage() {
   const { savedArticles, toggleSave } = useSavedNews();
@@ -68,8 +69,8 @@ export default function SavedNewsPage() {
                     </div>
                     
                     <div className="flex items-center justify-between mt-4 sm:mt-0">
-                      <span className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
-                        <Clock size={14} /> ২ ঘন্টা আগে
+                      <span suppressHydrationWarning className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
+                        <Clock size={14} /> {getRelativeTime(article.published_date || article.date)}
                       </span>
                       
                       <div className="flex items-center gap-2">

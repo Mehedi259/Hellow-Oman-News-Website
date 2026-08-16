@@ -46,6 +46,34 @@ export function formatDate(dateStr: string) {
   }
 }
 
+export function getRelativeTime(dateStr: string | undefined): string {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    const now = new Date();
+    const diffInMs = now.getTime() - d.getTime();
+    if (diffInMs < 0) return formatDate(dateStr);
+    
+    const diffInMins = Math.floor(diffInMs / (1000 * 60));
+    const diffInHours = Math.floor(diffInMins / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+    
+    const bnNums = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    const toBn = (num: number) => num.toString().split('').map(n => bnNums[parseInt(n)] || n).join('');
+    
+    if (diffInMins < 1) return 'এইমাত্র';
+    if (diffInMins < 60) return `${toBn(diffInMins)} মিনিট আগে`;
+    if (diffInHours < 24) return `${toBn(diffInHours)} ঘণ্টা আগে`;
+    if (diffInDays < 7) return `${toBn(diffInDays)} দিন আগে`;
+    
+    return formatDate(dateStr);
+  } catch (e) {
+    return dateStr;
+  }
+}
+
+
 // Map backend Post model to frontend NewsArticle
 const mapToNewsArticle = (post: any): NewsArticle => {
   return {

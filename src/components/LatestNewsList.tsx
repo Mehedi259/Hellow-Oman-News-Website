@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, Bookmark } from "lucide-react";
-import { NewsArticle } from "@/data/news";
+import { NewsArticle, getRelativeTime } from "@/data/news";
 import { useSavedNews } from "@/hooks/useSavedNews";
 
 export default function LatestNewsList({ title, articles, categoryLink }: { title: string, articles: NewsArticle[], categoryLink?: string }) {
@@ -43,8 +43,8 @@ export default function LatestNewsList({ title, articles, categoryLink }: { titl
                     {news.title}
                   </h3>
                   <div className="flex justify-between items-center mt-1">
-                    <span className="flex items-center gap-1 text-[11px] text-slate-500">
-                      <Clock size={12} /> ২ ঘন্টা আগে
+                    <span suppressHydrationWarning className="flex items-center gap-1 text-[11px] text-slate-500">
+                      <Clock size={12} /> {getRelativeTime(news.published_date)}
                     </span>
                     <button 
                       className={`transition-colors p-1 -mr-1 ${isSaved(news.id) ? 'text-green-500' : 'text-slate-400 hover:text-green-500'}`} 

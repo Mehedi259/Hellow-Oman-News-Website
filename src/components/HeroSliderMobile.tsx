@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { NewsArticle } from "@/data/news";
-import { Calendar, Eye } from "lucide-react";
+import { NewsArticle, getRelativeTime } from "@/data/news";
+import { Calendar, Eye, Clock } from "lucide-react";
 
 export default function HeroSliderMobile({ sliderNews }: { sliderNews: NewsArticle[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,7 @@ export default function HeroSliderMobile({ sliderNews }: { sliderNews: NewsArtic
               <div className="absolute bottom-0 left-0 w-full p-4 z-10">
                 <div className="flex items-center gap-3 text-slate-300 text-[10px] mb-1.5">
                   <span className="flex items-center gap-1"><Calendar size={10} /> {news.date}</span>
-                  <span className="flex items-center gap-1"><Eye size={10} /> ২ ঘন্টা আগে</span>
+                  <span suppressHydrationWarning className="flex items-center gap-1"><Clock size={10} /> {getRelativeTime(news.published_date || news.date)}</span>
                 </div>
                 <h2 className="text-base font-bold text-white leading-snug line-clamp-2">
                   {news.title}
