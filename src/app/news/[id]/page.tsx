@@ -43,8 +43,56 @@ export default function NewsDetailsPage() {
     return (
       <>
         <Header />
-        <div className="container mx-auto px-4 py-32 text-center text-xl font-medium text-slate-500">
-          সংবাদ লোড হচ্ছে...
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Main Article Content Skeleton */}
+            <div className="lg:col-span-8">
+              <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
+                <div className="p-6 md:p-8 animate-pulse">
+                  {/* Category */}
+                  <div className="w-20 h-6 bg-slate-200 dark:bg-slate-700 rounded mb-4"></div>
+                  {/* Title */}
+                  <div className="w-full h-8 md:h-10 bg-slate-200 dark:bg-slate-700 rounded mb-3"></div>
+                  <div className="w-3/4 h-8 md:h-10 bg-slate-200 dark:bg-slate-700 rounded mb-8"></div>
+                  {/* Meta */}
+                  <div className="flex flex-wrap gap-4 mb-8 py-3 border-y border-slate-100 dark:border-slate-800">
+                    <div className="w-24 h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                    <div className="w-24 h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                    <div className="w-24 h-4 bg-slate-200 dark:bg-slate-700 rounded ml-auto"></div>
+                  </div>
+                  {/* Image */}
+                  <div className="w-full aspect-video bg-slate-200 dark:bg-slate-700 rounded-xl mb-8"></div>
+                  {/* Content */}
+                  <div className="space-y-4">
+                    <div className="w-full h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                    <div className="w-full h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                    <div className="w-5/6 h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                    <div className="w-full h-4 bg-slate-200 dark:bg-slate-700 rounded mt-4"></div>
+                    <div className="w-4/5 h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar Skeleton */}
+            <div className="lg:col-span-4 flex flex-col gap-8">
+              <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 animate-pulse">
+                <div className="w-32 h-6 bg-slate-200 dark:bg-slate-700 rounded mb-6"></div>
+                <div className="flex flex-col gap-4">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="flex gap-4">
+                      <div className="w-24 h-20 bg-slate-200 dark:bg-slate-700 rounded-lg shrink-0"></div>
+                      <div className="flex flex-col justify-center flex-1 gap-2">
+                        <div className="w-16 h-3 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                        <div className="w-full h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                        <div className="w-2/3 h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <Footer />
       </>
@@ -79,7 +127,8 @@ export default function NewsDetailsPage() {
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(shareUrl);
+    const decodedUrl = decodeURIComponent(shareUrl);
+    navigator.clipboard.writeText(decodedUrl);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };
