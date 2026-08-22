@@ -75,10 +75,7 @@ export default function ContactPage() {
                       <h3 className="font-bold text-lg text-foreground mb-2">আমাদের ঠিকানা</h3>
                       <p className="text-slate-600 dark:text-slate-400 text-sm">
                         রুই, মাস্কাট<br />
-                        সালতানাত অফ ওমান<br />
-                        <br />
-                        ঢাকা অফিস:<br />
-                        কারওয়ান বাজার, ঢাকা-১২১৫
+                        সালতানাত অফ ওমান
                       </p>
                     </div>
                   </div>
@@ -92,8 +89,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-bold text-lg text-foreground mb-2">ফোন</h3>
                       <p className="text-slate-600 dark:text-slate-400 text-sm">
-                        ওমান: +968 1234 5678<br />
-                        বাংলাদেশ: +880 1XXX-XXXXXX
+                        ওমান: +968 78147442
                       </p>
                     </div>
                   </div>
@@ -107,9 +103,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-bold text-lg text-foreground mb-2">ইমেইল</h3>
                       <p className="text-slate-600 dark:text-slate-400 text-sm">
-                        news@helloomanbangla.com<br />
-                        editor@helloomanbangla.com<br />
-                        info@helloomanbangla.com
+                        helloshebaofficial@gmail.com
                       </p>
                     </div>
                   </div>

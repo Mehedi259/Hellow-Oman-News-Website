@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, Search, MapPin, Calendar, Mail, Send, X, Bell } from "lucide-react";
@@ -17,6 +17,8 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const currentPath = decodeURIComponent(pathname);
 
   useEffect(() => {
     const handleToggleMenu = () => setIsMobileMenuOpen(prev => !prev);
@@ -145,16 +147,19 @@ export default function Header() {
       {/* Mobile Scrollable Categories */}
       <div className="md:hidden border-t border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar">
         <ul className="flex items-center px-4 py-2 space-x-6 min-w-max">
-          {scrollCategories.map((category, index) => (
-            <li key={category.name}>
-              <Link 
-                href={category.link}
-                className={`text-[15px] font-medium transition-colors whitespace-nowrap pb-2 block ${index === 0 ? 'text-brand border-b-2 border-brand' : 'text-slate-600 dark:text-slate-400 hover:text-brand'}`}
-              >
-                {category.name}
-              </Link>
-            </li>
-          ))}
+          {scrollCategories.map((category, index) => {
+            const isActive = currentPath === category.link || (currentPath === '/' && category.link === '/');
+            return (
+              <li key={category.name}>
+                <Link 
+                  href={category.link}
+                  className={`text-[15px] font-medium transition-colors whitespace-nowrap pb-2 block ${isActive ? 'text-brand border-b-2 border-brand' : 'text-slate-600 dark:text-slate-400 hover:text-brand'}`}
+                >
+                  {category.name}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
 
@@ -162,16 +167,20 @@ export default function Header() {
       <nav className="hidden md:block border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50">
         <div className="container mx-auto px-4">
           <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2 py-3">
-            {CATEGORIES.map((category) => (
-              <li key={category}>
-                <Link 
-                  href={category === "প্রচ্ছদ" ? "/" : `/category/${category}`}
-                  className="text-foreground/80 hover:text-brand font-medium transition-colors text-[15px]"
-                >
-                  {category}
-                </Link>
-              </li>
-            ))}
+            {CATEGORIES.map((category) => {
+              const link = category === "প্রচ্ছদ" ? "/" : `/category/${category}`;
+              const isActive = currentPath === link || (currentPath === '/' && link === '/');
+              return (
+                <li key={category}>
+                  <Link 
+                    href={link}
+                    className={`${isActive ? 'text-brand font-bold' : 'text-foreground/80 hover:text-brand font-medium'} transition-colors text-[15px]`}
+                  >
+                    {category}
+                  </Link>
+                </li>
+              );
+            })}
             <li>
               <Link 
                 href="/video"

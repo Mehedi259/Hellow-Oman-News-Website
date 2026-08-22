@@ -134,15 +134,15 @@ export default function Footer() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-2">
                   <MapPin size={18} className="text-brand shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-400">রুই, মাস্কাট, ওমান। <br />ঢাকা অফিস: কারওয়ান বাজার, ঢাকা।</span>
+                  <span className="text-sm text-slate-400">রুই, মাস্কাট, সালতানাত অফ ওমান।</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Mail size={18} className="text-brand shrink-0" />
-                  <span className="text-sm text-slate-400 overflow-hidden text-ellipsis" style={{ wordBreak: 'break-all' }}>news@helloomanbangla.com</span>
+                  <span className="text-sm text-slate-400 overflow-hidden text-ellipsis" style={{ wordBreak: 'break-all' }}>helloshebaofficial@gmail.com</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone size={18} className="text-brand shrink-0" />
-                  <span className="text-sm text-slate-400">+968 1234 5678</span>
+                  <span className="text-sm text-slate-400">+968 78147442</span>
                 </li>
               </ul>
               
