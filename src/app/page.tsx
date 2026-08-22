@@ -8,6 +8,7 @@ import CategoryQuickLinks from "@/components/CategoryQuickLinks";
 import LatestNewsList from "@/components/LatestNewsList";
 import VideoGalleryHome from "@/components/VideoGalleryHome";
 import MusaflyAd from "@/components/MusaflyAd";
+import HelloOmanAd from "@/components/HelloOmanAd";
 import { getLatestNews, getTopNews, getTrendingNews, getNewsByCategoryName } from "@/data/news";
 
 export const revalidate = 60;
@@ -29,6 +30,10 @@ export default async function Home() {
 
       <NewsTicker allTickerNews={[...(topNews ? [topNews] : []), ...trendingNews]} />
       <main className="flex-1">
+        
+        {/* Hello Oman Sheba Ad Space */}
+        <HelloOmanAd />
+
         <HeroSection topNews={topNews} trendingNews={trendingNews} />
         
         {/* Mobile Quick Links */}
