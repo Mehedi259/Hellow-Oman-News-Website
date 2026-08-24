@@ -40,7 +40,7 @@ export default async function Home() {
         <CategoryQuickLinks />
         
         {/* Ad Space */}
-        <MusaflyAd />
+        {/* <MusaflyAd /> */}
 
         {/* Mobile Latest News List */}
         <LatestNewsList 

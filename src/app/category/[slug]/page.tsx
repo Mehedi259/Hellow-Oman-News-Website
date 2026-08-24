@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CATEGORIES, getAllNews } from "@/data/news";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return CATEGORIES.map((category) => ({
     slug: category,
