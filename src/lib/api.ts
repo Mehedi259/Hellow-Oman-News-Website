@@ -23,10 +23,10 @@ export const fetchAPI = async (endpoint: string, options: FetchOptions = {}) => 
     config.body = JSON.stringify(data);
   }
 
-  // Use next-specific revalidation if fetching directly in server components
-  if (!config.cache && !config.next) {
-    config.next = { revalidate: 60 }; // default 60s cache
-  }
+  // Disable Next.js data cache to prevent massive ISR write unit consumption
+  // since the payload exceeds Vercel's 2MB cache limit and fails to cache,
+  // causing continuous write attempts on every request.
+  config.cache = 'no-store';
 
   const response = await fetch(`${API_URL}${endpoint}`, config);
   const result = await response.json();
