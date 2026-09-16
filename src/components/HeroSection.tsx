@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { NewsArticle } from "@/data/news";
 import HeroSliderMobile from "./HeroSliderMobile";
+import SidebarAd from "./SidebarAd";
 
 export default function HeroSection({ topNews, trendingNews }: { topNews: NewsArticle | null, trendingNews: NewsArticle[] }) {
   if (!topNews) return null;
@@ -50,6 +51,7 @@ export default function HeroSection({ topNews, trendingNews }: { topNews: NewsAr
 
           {/* Sidebar Articles (Right) */}
           <div className="lg:col-span-4 flex flex-col gap-6">
+            <SidebarAd />
             {trendingNews.slice(0, 4).map((news) => (
               <div key={news.id} className="glass-card overflow-hidden group rounded-xl">
                 <Link href={`/news/${news.id}`} className="flex h-[100px] sm:h-[110px]">

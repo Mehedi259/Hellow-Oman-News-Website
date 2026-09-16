@@ -9,6 +9,7 @@ import { Calendar, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SidebarAd from "@/components/SidebarAd";
 
 export default function NewsDetailsPage() {
   const params = useParams();
@@ -263,6 +264,7 @@ export default function NewsDetailsPage() {
 
         {/* Sidebar */}
         <div className="lg:col-span-4 flex flex-col gap-8">
+          <SidebarAd />
           <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6">
             <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
               <span className="w-1.5 h-5 bg-brand inline-block rounded-sm"></span>
