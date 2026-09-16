@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "helloomanbangla.com",
       },
+      {
+        protocol: "https",
+        hostname: "helloprobash.com",
+      },
     ],
   },
   async rewrites() {
