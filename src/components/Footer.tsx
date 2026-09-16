@@ -35,7 +35,7 @@ export default function Footer() {
           <div className="space-y-4 lg:col-span-1">
             <Link href="/" className="inline-block">
               {/* Note: You might want a white version of the logo for the dark footer if it's currently dark */}
-              <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={200} height={50} className="h-12 w-auto brightness-0 invert" />
+              <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={400} height={120} className="h-20 sm:h-24 md:h-28 w-auto brightness-0 invert object-contain" />
             </Link>
             <p className="text-sm leading-relaxed text-slate-400 mt-4">
               হ্যালো ওমান বাংলা - ওমান ও মধ্যপ্রাচ্যসহ বিশ্বজুড়ে থাকা প্রবাসী বাংলাদেশীদের জন্য সবচেয়ে নির্ভরযোগ্য ও জনপ্রিয় সংবাদ মাধ্যম। সত্য ও বস্তুনিষ্ঠ সংবাদ প্রকাশে আমরা বদ্ধপরিকর।

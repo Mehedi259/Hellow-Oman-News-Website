@@ -85,7 +85,7 @@ export default function Header() {
 
           {/* Logo */}
           <Link href="/" className="flex flex-col items-center mx-auto md:mx-0 shrink-0">
-            <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={200} height={50} className="h-8 sm:h-10 md:h-12 w-auto" />
+            <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={400} height={120} className="h-16 sm:h-20 md:h-28 w-auto object-contain" />
           </Link>
 
           {/* Desktop Right Actions */}
@@ -219,7 +219,7 @@ export default function Header() {
           {/* Header */}
           <div className="p-5 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-brand/5 to-brand/10">
             <Link href="/" className="flex flex-col items-start" onClick={() => setIsMobileMenuOpen(false)}>
-              <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={150} height={40} className="h-8 w-auto" />
+              <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={250} height={70} className="h-12 sm:h-14 w-auto object-contain" />
             </Link>
             <button 
               onClick={() => setIsMobileMenuOpen(false)} 
