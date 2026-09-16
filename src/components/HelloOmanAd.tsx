@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const adTexts = [
   { icon: Headset, text: "ওমানে যেকোনো সেবার জন্য আমরা আছি আপনার পাশে!" },
   { icon: ShieldCheck, text: "নির্ভরযোগ্য ও দ্রুত সেবা পেতে আজই যোগাযোগ করুন!" },
-  { icon: ThumbsUp, text: "Hello Oman Sheba - আপনার আস্থার ঠিকানা!" }
+  { icon: ThumbsUp, text: "Hello Probash Sheba - আপনার আস্থার ঠিকানা!" }
 ];
 
 export default function HelloOmanAd() {
@@ -54,7 +54,7 @@ export default function HelloOmanAd() {
                 </motion.div>
               </div>
               <div className="text-left">
-                <h3 className="text-2xl font-black text-white tracking-wide drop-shadow-md">Hello Oman</h3>
+                <h3 className="text-2xl font-black text-white tracking-wide drop-shadow-md">Hello Probash</h3>
                 <p className="text-emerald-100 text-xs font-bold tracking-widest uppercase opacity-90">Sheba</p>
               </div>
             </div>
