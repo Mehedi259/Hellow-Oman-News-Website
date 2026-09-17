@@ -3,8 +3,8 @@ import Footer from "@/components/Footer";
 import { Shield } from "lucide-react";
 
 export const metadata = {
-  title: "গোপনীয়তা নীতি | হ্যালো ওমান বাংলা",
-  description: "হ্যালো ওমান বাংলার গোপনীয়তা নীতি এবং ব্যবহারকারীর তথ্য সুরক্ষা সম্পর্কে জানুন",
+  title: "গোপনীয়তা নীতি | হ্যালো প্রবাস",
+  description: "হ্যালো প্রবাসর গোপনীয়তা নীতি এবং ব্যবহারকারীর তথ্য সুরক্ষা সম্পর্কে জানুন",
 };
 
 export default function PrivacyPage() {
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
             <div className="bg-white dark:bg-slate-900 rounded-2xl p-8 md:p-12 shadow-sm border border-slate-200 dark:border-slate-800">
               <div className="prose prose-lg dark:prose-invert max-w-none">
                 <p className="text-lg leading-relaxed mb-6">
-                  হ্যালো ওমান বাংলা আপনার গোপনীয়তাকে অত্যন্ত গুরুত্বের সাথে বিবেচনা করে। এই গোপনীয়তা নীতিতে ব্যাখ্যা করা হয়েছে যে আমরা কীভাবে আপনার ব্যক্তিগত তথ্য সংগ্রহ, ব্যবহার এবং সুরক্ষিত রাখি।
+                  হ্যালো প্রবাস আপনার গোপনীয়তাকে অত্যন্ত গুরুত্বের সাথে বিবেচনা করে। এই গোপনীয়তা নীতিতে ব্যাখ্যা করা হয়েছে যে আমরা কীভাবে আপনার ব্যক্তিগত তথ্য সংগ্রহ, ব্যবহার এবং সুরক্ষিত রাখি।
                 </p>
 
                 <h2 className="text-2xl font-bold text-foreground mt-8 mb-4">১. তথ্য সংগ্রহ</h2>

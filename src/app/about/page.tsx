@@ -3,8 +3,8 @@ import Footer from "@/components/Footer";
 import { Users, Target, Award, Heart } from "lucide-react";
 
 export const metadata = {
-  title: "আমাদের সম্পর্কে | হ্যালো ওমান বাংলা",
-  description: "হ্যালো ওমান বাংলা সম্পর্কে জানুন - প্রবাসী বাংলাদেশীদের জন্য নির্ভরযোগ্য সংবাদ মাধ্যম",
+  title: "আমাদের সম্পর্কে | হ্যালো প্রবাস",
+  description: "হ্যালো প্রবাস সম্পর্কে জানুন - প্রবাসী বাংলাদেশীদের জন্য নির্ভরযোগ্য সংবাদ মাধ্যম",
 };
 
 export default function AboutPage() {
@@ -29,7 +29,7 @@ export default function AboutPage() {
             <div className="bg-white dark:bg-slate-900 rounded-2xl p-8 md:p-12 shadow-sm border border-slate-200 dark:border-slate-800 mb-8">
               <div className="prose prose-lg dark:prose-invert max-w-none">
                 <p className="text-lg leading-relaxed mb-6">
-                  <strong>হ্যালো ওমান বাংলা</strong> ওমান ও মধ্যপ্রাচ্যসহ বিশ্বজুড়ে ছড়িয়ে থাকা প্রবাসী বাংলাদেশীদের জন্য একটি নির্ভরযোগ্য এবং জনপ্রিয় অনলাইন সংবাদ মাধ্যম। আমরা ২০২৪ সাল থেকে প্রবাসীদের সঠিক ও সময়োপযোগী তথ্য প্রদানে নিরলসভাবে কাজ করে যাচ্ছি।
+                  <strong>হ্যালো প্রবাস</strong> ওমান ও মধ্যপ্রাচ্যসহ বিশ্বজুড়ে ছড়িয়ে থাকা প্রবাসী বাংলাদেশীদের জন্য একটি নির্ভরযোগ্য এবং জনপ্রিয় অনলাইন সংবাদ মাধ্যম। আমরা ২০২৪ সাল থেকে প্রবাসীদের সঠিক ও সময়োপযোগী তথ্য প্রদানে নিরলসভাবে কাজ করে যাচ্ছি।
                 </p>
 
                 <p className="text-lg leading-relaxed mb-6">
@@ -101,7 +101,7 @@ export default function AboutPage() {
                 </ul>
 
                 <p className="text-lg leading-relaxed mt-6">
-                  আমরা বিশ্বাস করি যে সঠিক তথ্য একটি সমৃদ্ধ সমাজ গঠনের ভিত্তি। <strong>হ্যালো ওমান বাংলা</strong> প্রতিশ্রুতিবদ্ধ আপনাদের জন্য সর্বোত্তম সেবা প্রদানে।
+                  আমরা বিশ্বাস করি যে সঠিক তথ্য একটি সমৃদ্ধ সমাজ গঠনের ভিত্তি। <strong>হ্যালো প্রবাস</strong> প্রতিশ্রুতিবদ্ধ আপনাদের জন্য সর্বোত্তম সেবা প্রদানে।
                 </p>
               </div>
             </div>

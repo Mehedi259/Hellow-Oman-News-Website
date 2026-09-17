@@ -35,10 +35,10 @@ export default function Footer() {
           <div className="space-y-4 lg:col-span-1">
             <Link href="/" className="inline-block">
               {/* Note: You might want a white version of the logo for the dark footer if it's currently dark */}
-              <Image src="/images/logo.png" alt="হ্যালো ওমান বাংলা" width={80} height={40} className="w-[80px] h-auto brightness-0 invert object-contain" />
+              <Image src="/images/logo.png" alt="হ্যালো প্রবাস" width={80} height={40} className="w-[80px] h-auto brightness-0 invert object-contain" />
             </Link>
             <p className="text-sm leading-relaxed text-slate-400 mt-4">
-              হ্যালো ওমান বাংলা - ওমান ও মধ্যপ্রাচ্যসহ বিশ্বজুড়ে থাকা প্রবাসী বাংলাদেশীদের জন্য সবচেয়ে নির্ভরযোগ্য ও জনপ্রিয় সংবাদ মাধ্যম। সত্য ও বস্তুনিষ্ঠ সংবাদ প্রকাশে আমরা বদ্ধপরিকর।
+              হ্যালো প্রবাস - ওমান ও মধ্যপ্রাচ্যসহ বিশ্বজুড়ে থাকা প্রবাসী বাংলাদেশীদের জন্য সবচেয়ে নির্ভরযোগ্য ও জনপ্রিয় সংবাদ মাধ্যম। সত্য ও বস্তুনিষ্ঠ সংবাদ প্রকাশে আমরা বদ্ধপরিকর।
               <br /><br />
               <strong className="text-brand">সম্পাদক ও প্রকাশক:</strong> মুসা ইমন
             </p>
@@ -167,7 +167,7 @@ export default function Footer() {
       {/* Copyright */}
       <div className="border-t border-slate-800 pt-6 mt-6">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} হ্যালো ওমান বাংলা। সর্বস্বত্ব সংরক্ষিত।</p>
+          <p>© {new Date().getFullYear()} হ্যালো প্রবাস। সর্বস্বত্ব সংরক্ষিত।</p>
           <div className="text-right">
             <p>ডেভেলপমেন্ট পার্টনার: মুসাফ্লাই আইটি</p>
             <p className="mt-1 font-medium">Developed by Hello Oman Tech</p>
