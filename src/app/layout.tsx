@@ -13,6 +13,12 @@ const hindSiliguri = Hind_Siliguri({
 export const metadata: Metadata = {
   title: "Hello Probash | Latest News",
   description: "Get the latest news and updates from Oman, Bangladesh, and around the world on Hello Probash.",
+  openGraph: {
+    title: "Hello Probash | Latest News",
+    description: "Get the latest news and updates from Oman, Bangladesh, and around the world on Hello Probash.",
+    siteName: "Hello Probash",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
