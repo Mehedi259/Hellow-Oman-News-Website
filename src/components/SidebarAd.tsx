@@ -1,11 +1,19 @@
 import React from "react";
+import GoogleAd from "./GoogleAd";
 
-export default function SidebarAd() {
+interface SidebarAdProps {
+  adSlot?: string;
+  className?: string;
+}
+
+export default function SidebarAd({ adSlot, className = "" }: SidebarAdProps) {
   return (
-    <div className="bg-slate-100 dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-[250px]">
-      <span className="text-slate-400 dark:text-slate-500 font-medium text-sm tracking-widest uppercase">
-        Ads
-      </span>
+    <div className={`w-full ${className}`}>
+      <GoogleAd 
+        adSlot={adSlot} 
+        adFormat="rectangle" 
+        style={{ display: "block", minHeight: "280px" }}
+      />
     </div>
   );
 }

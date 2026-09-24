@@ -104,7 +104,13 @@ export async function getAllNews(): Promise<NewsArticle[]> {
 
 export async function getNewsBySlug(slug: string): Promise<NewsArticle | null> {
   try {
-    const res = await fetchAPI(`/posts/slug/${slug}`);
+    let cleanSlug = slug;
+    try {
+      cleanSlug = decodeURIComponent(slug);
+    } catch {
+      cleanSlug = slug;
+    }
+    const res = await fetchAPI(`/posts/slug/${encodeURIComponent(cleanSlug)}`);
     if (res.success && res.data) {
       return mapToNewsArticle(res.data);
     }

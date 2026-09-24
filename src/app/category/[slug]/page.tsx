@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import GoogleAd from "@/components/GoogleAd";
 import { CATEGORIES, getAllNews } from "@/data/news";
 
 export const dynamicParams = false;
@@ -13,7 +15,32 @@ export function generateStaticParams() {
   }));
 }
 
-export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+interface CategoryProps {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: CategoryProps): Promise<Metadata> {
+  const { slug } = await params;
+  const categoryName = decodeURIComponent(slug);
+
+  if (!CATEGORIES.includes(categoryName)) {
+    return {
+      title: "বিভাগ পাওয়া যায়নি",
+    };
+  }
+
+  return {
+    title: `${categoryName} সংবাদ ও খবর`,
+    description: `হ্যালো প্রবাসে ${categoryName} বিভাগের সর্বশেষ সংবাদ, খবরাখবর এবং বিস্তারিত প্রতিবেদন পড়ুন।`,
+    openGraph: {
+      title: `${categoryName} সংবাদ | Hello Probash`,
+      description: `হ্যালো প্রবাসে ${categoryName} বিভাগের সর্বশেষ সংবাদ পড়ুন।`,
+      type: "website",
+    },
+  };
+}
+
+export default async function CategoryPage({ params }: CategoryProps) {
   const resolvedParams = await params;
   const categoryName = decodeURIComponent(resolvedParams.slug);
 
@@ -42,42 +69,50 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
           {/* Category News Grid */}
           {categoryNews.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {categoryNews.map((article) => (
-                <div
-                  key={article.id}
-                  className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all duration-300 flex flex-col group"
-                >
-                  <Link href={`/news/${article.id}`} className="relative aspect-video overflow-hidden">
-                    <Image
-                      src={article.image}
-                      alt={article.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </Link>
-                  <div className="p-5 flex flex-col flex-1">
-                    <span className="inline-block text-xs font-bold text-brand bg-brand/10 px-3 py-1 rounded mb-3 w-fit">
-                      {article.category}
-                    </span>
-                    <Link href={`/news/${article.id}`}>
-                      <h2 className="text-lg font-bold text-foreground mb-3 group-hover:text-brand transition-colors line-clamp-3 leading-snug">
-                        {article.title}
-                      </h2>
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {categoryNews.map((article) => (
+                  <div
+                    key={article.id}
+                    className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all duration-300 flex flex-col group"
+                  >
+                    <Link href={`/news/${article.id}`} className="relative aspect-video overflow-hidden">
+                      <Image
+                        src={article.image}
+                        alt={article.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </Link>
-                    {article.excerpt && (
-                      <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">
-                        {article.excerpt}
-                      </p>
-                    )}
-                    <div className="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
-                      <p className="text-xs text-slate-400">{article.date}</p>
+                    <div className="p-5 flex flex-col flex-1">
+                      <span className="inline-block text-xs font-bold text-brand bg-brand/10 px-3 py-1 rounded mb-3 w-fit">
+                        {article.category}
+                      </span>
+                      <Link href={`/news/${article.id}`}>
+                        <h2 className="text-lg font-bold text-foreground mb-3 group-hover:text-brand transition-colors line-clamp-3 leading-snug">
+                          {article.title}
+                        </h2>
+                      </Link>
+                      {article.excerpt && (
+                        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">
+                          {article.excerpt}
+                        </p>
+                      )}
+                      <div className="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <p className="text-xs text-slate-400">{article.date}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+
+              {/* Ad Space below category grid */}
+              <div className="mt-12 max-w-4xl mx-auto">
+                <GoogleAd adFormat="horizontal" />
+              </div>
+            </>
           ) : (
             <div className="text-center py-20">
               <div className="w-24 h-24 mx-auto mb-6 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center">

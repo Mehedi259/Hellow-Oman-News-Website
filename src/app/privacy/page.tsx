@@ -68,10 +68,18 @@ export default function PrivacyPage() {
                   আমরা আপনার ব্যক্তিগত তথ্য সুরক্ষিত রাখতে উপযুক্ত প্রযুক্তিগত ও সাংগঠনিক ব্যবস্থা গ্রহণ করি। তবে ইন্টারনেটের মাধ্যমে কোনো তথ্য স্থানান্তর সম্পূর্ণ নিরাপদ নয়।
                 </p>
 
-                <h2 className="text-2xl font-bold text-foreground mt-8 mb-4">৫. কুকিজ</h2>
+                <h2 className="text-2xl font-bold text-foreground mt-8 mb-4">৫. কুকিজ ও গুগল অ্যাডসেন্স (Google AdSense)</h2>
                 <p>
                   আমাদের ওয়েবসাইট কুকিজ ব্যবহার করে যা আপনার ব্রাউজিং অভিজ্ঞতা উন্নত করতে সাহায্য করে। আপনি চাইলে আপনার ব্রাউজার সেটিংসের মাধ্যমে কুকিজ নিষ্ক্রিয় করতে পারেন।
                 </p>
+                <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+                  <h3 className="font-bold text-foreground mb-2">গুগল এবং বিজ্ঞাপনী কুকিজ সংক্রান্ত তথ্য:</h3>
+                  <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                    <li>গুগল সহ তৃতীয় পক্ষের বিজ্ঞাপন নেটওয়ার্কগুলি ব্যবহারকারীর পূর্ববর্তী ব্রাউজিং কার্যকলাপের ওপর ভিত্তি করে বিজ্ঞাপন প্রদর্শন করতে কুকিজ (যেমন DoubleClick cookie) ব্যবহার করে।</li>
+                    <li>গুগল বিজ্ঞাপনী কুকি ব্যবহারের মাধ্যমে এই ওয়েবসাইট এবং ইন্টারনেটের অন্যান্য ওয়েবসাইটে ব্যবহারকারীর ব্রাউজিং অভ্যাসের ভিত্তিতে প্রাসঙ্গিক বিজ্ঞাপন পরিবেশন করতে সক্ষম হয়।</li>
+                    <li>ব্যবহারকারীরা চাইলে <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-brand underline font-medium">গুগল অ্যাডস সেটিংস (Google Ads Settings)</a> এ গিয়ে পার্সোনালাইজড বিজ্ঞাপন বন্ধ (Opt-out) করতে পারেন।</li>
+                  </ul>
+                </div>
 
                 <h2 className="text-2xl font-bold text-foreground mt-8 mb-4">৬. তৃতীয় পক্ষের লিংক</h2>
                 <p>

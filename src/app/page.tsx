@@ -9,6 +9,7 @@ import LatestNewsList from "@/components/LatestNewsList";
 import VideoGalleryHome from "@/components/VideoGalleryHome";
 import MusaflyAd from "@/components/MusaflyAd";
 import HelloOmanAd from "@/components/HelloOmanAd";
+import GoogleAd from "@/components/GoogleAd";
 import { getLatestNews, getTopNews, getTrendingNews, getNewsByCategoryName } from "@/data/news";
 
 export const revalidate = 60;
@@ -69,6 +70,10 @@ export default async function Home() {
           articles={nationalNews} 
           categoryLink="/category/বাংলাদেশ"
         />
+
+        <div className="container mx-auto px-4 my-6">
+          <GoogleAd adFormat="horizontal" />
+        </div>
 
         <CategorySection 
           title="রাজনীতি" 
