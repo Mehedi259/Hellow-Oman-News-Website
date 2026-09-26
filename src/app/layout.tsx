@@ -47,6 +47,7 @@ export const metadata: Metadata = {
     ].filter(Boolean) as string[],
     other: {
       "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || "",
+      "google-adsense-account": "ca-pub-3440952362646535",
     },
   },
   robots: {
@@ -67,7 +68,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const adSenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+  const adSenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-3440952362646535";
 
   return (
     <html
